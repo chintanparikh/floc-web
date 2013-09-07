@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<title>Floc</title>
+	<meta name="description" content="Georgia Tech's Entrepreneurial Movement. We throw amazing events and connect amazing people.">
+	<meta name="keywords" content="Startup,Exchange,Connection,Multidisciplinary,Ideas,Entrepreneurship,Community,Collaboration">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link href='http://fonts.googleapis.com/css?family=Fauna+One' rel='stylesheet' type='text/css'>
+
+	<link rel="stylesheet" media="screen" type="text/css" href="css/reset.css" />
+	<link rel="stylesheet" media="screen" type="text/css" href="css/style.css" />	
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+	<script src="js/facebook.js"></script>
+	  
+</head>
+
+<body>
+	<div id="fb-root"></div>
+		<script>
+		window.fbAsyncInit = function() {
+		  FB.init({
+		    appId      : '635711579796398', // Facebook App ID
+		    channelUrl : window.location.href + 'channel.html', // Channel File
+		    status     : true, // check login status
+		    cookie     : true, // enable cookies to allow Parse to access the session
+		    xfbml      : true  // parse XFBML
+		  });
+		 
+		  // Additional initialization code here
+		};
+
+		  // Load the SDK asynchronously
+		  (function(d, s, id){
+		     var js, fjs = d.getElementsByTagName(s)[0];
+		     if (d.getElementById(id)) {return;}
+		     js = d.createElement(s); js.id = id;
+		     js.src = "http://connect.facebook.net/en_US/all.js";
+		     fjs.parentNode.insertBefore(js, fjs);
+		   }(document, 'script', 'facebook-jssdk'));
+		</script>
+
+	<div id="header"><img src="img/header.png" alt="Floc" id="logo"/></div>
+
+	<button class="facebook auth"><img src="img/facebook-icon.png" alt="f" id="fb-logo"/><img src="img/facebook-text.png" alt="Connect with facebook" id="button-text" /></button>
+
+	<div class="events hidden">
+		<div class="event">
+			<a href="timeline.html"><img src="img/events/1.png" class="thumbnail" /> <span class="description">PennApps Fall 2013</span></a>
+		</div>
+		<div class="event">
+			<a href="timeline.html"><img src="img/events/2.png" class="thumbnail" /> <span class="description">PennApps Fall 2013</span></a>
+		</div>
+		<div class="event">
+			<a href="timeline.html"><img src="img/events/3.png" class="thumbnail" /> <span class="description">PennApps Fall 2013</span></a>
+		</div>
+		<div class="event">
+			<a href="timeline.html"><img src="img/events/4.png" class="thumbnail" /> <span class="description">PennApps Fall 2013</span></a>
+		</div>
+	</div>
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+	<script src="vendor/js/blackandwhite/blackandwhite.js"></script>
+	<script src="js/funk.js"></script>
+</body>
+</html>

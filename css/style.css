@@ -1,0 +1,128 @@
+html, body {
+	margin:0 auto;
+	width:100%;
+	height:100%;
+	background:url('../img/bg.jpg') no-repeat center center fixed;
+	background-size: 120%;
+	text-align: center;
+}
+
+#header {
+	background: url('../img/header-bg.png') repeat-x;
+	width:100%;
+	margin-top:200px;
+	text-align: center;
+	height: 50px;
+}
+
+#logo {
+	position: relative;
+	top: -105px;
+	width: 426px;
+	margin: 0 auto;
+}
+
+button {
+	border: 0;
+	height: 117px;
+	width: 522px;
+	background: url('../img/facebook-bg.png') repeat-x;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;	
+	cursor: hand;
+	cursor: pointer;
+}
+
+button img {
+	margin: 0;
+	padding: 0;
+	vertical-align: middle;
+}
+
+#fb-logo {
+	position: relative;
+	left: -10px;
+}
+
+#button-text {
+	position: relative;
+	right: -10px;
+}
+
+.hidden {
+	display: none;
+}
+
+.events {
+	margin-top: -240px;
+	width: 452px;
+	margin: 0 auto;
+	position: relative;
+	right: -30px;
+}
+
+.event {
+	width: 206px;
+	float: left;
+	margin-right: 20px;
+	margin-bottom: 20px;
+	height: 246px;
+	background: #1F1F1F;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	box-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
+	font-family: "Helvetica Neue";
+	color: #FFFFFF;
+}
+
+.event .thumbnail {
+	height: 206px;
+	width: 206px;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+	-moz-border-bottom-right-radius: 0;
+	-moz-border-bottom-left-radius: 0;
+	-webkit-border-bottom-right-radius: 0;
+	-webkit-border-bottom-left-radius: 0;
+}
+
+.event a:visited{
+	color: #ffffff;
+	text-decoration: none;
+}
+
+.event .description{
+	line-height: 36px;
+	font-size: 11pt;
+	font-weight: lighter;
+	text-decoration: none;
+}
+
+.thumbnail {
+	filter: grayscale(100%);
+	-webkit-filter: grayscale(100%);
+	-moz-filter: grayscale(100%);
+	filter: grayscale(100%);
+	-webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -ms-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
+.grayscale {
+	filter: grayscale(0%);
+	-webkit-filter: grayscale(0%);
+	-moz-filter: grayscale(0%);
+	filter: grayscale(0%);
+	-webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -ms-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
