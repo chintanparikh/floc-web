@@ -55,7 +55,7 @@
 
 				$(imageInfo).each(function(i, element)
 				{
-					if (Math.abs(current_image['position'] - element['position']) < 100)
+					if (Math.abs(current_image['position'] - element['position']) < 120)
 					{
 						console.log('go')
 						current_image['position'] = element['position'];
@@ -70,7 +70,7 @@
 				});
 				if (current_image['bottom'] > 420)
 				{
-					current_image['position'] += 220;
+					current_image['position'] += 240;
 					current_image['bottom'] = 10;
 				}
 				else
