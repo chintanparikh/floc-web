@@ -108,9 +108,7 @@
 		  		    while (circles > 0)
 		  		    {
 		  		    	time = new Date(new Date(start_time).getTime() + circles * 600000);
-		  		    	$('.timeline').append("<div class='dot' style='left: " + (circles * 600) + "px'>&nbsp;</dot><div class='arrow-up' style=''
-    width: 0;   height: 0;   border-left: 5px solid transparent;  border-right: 5px solid transparent;    border-bottom: 5px solid black;
-''></div><span class='under'>" + time.toString('hh:mmt').toLowerCase() + "</span>");
+		  		    	$('.timeline').append("<div class='dot' style='left: " + (circles * 600) + "px'>&nbsp;</dot><span class='under'>" + time.toString('hh:mmt').toLowerCase() + "</span>");
 		  		    	circles--;
 		  		    }
 
