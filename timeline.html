@@ -78,7 +78,7 @@
 					imageInfo.push(current_image);
 					$('.images').append(
 						"<a href='" + image + "' data-lightbox='timeline'><img src='" + image + "' class='timeline-image' style='bottom: " + current_image['bottom'] + "px; left: " + current_image['position'] + "px;' /></a>"
-					);
+					).fadeIn();
 				}
 			}
 		}
