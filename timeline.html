@@ -9,13 +9,177 @@
 	<link href='http://fonts.googleapis.com/css?family=Fauna+One' rel='stylesheet' type='text/css'>
 
 	<link rel="stylesheet" media="screen" type="text/css" href="css/reset.css" />
+	<link rel="stylesheet" media="screen" type="text/css" href="css/lightbox.css" />
+	<link rel="stylesheet" media="screen" type="text/css" href="css/screen.css" />
 	<link rel="stylesheet" media="screen" type="text/css" href="css/timeline.css" />
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<script type='text/javascript' src='https://cdn.firebase.com/v0/firebase.js'></script>
+		<script type='text/javascript' src='vendor/js/date/date.js'></script>
+		<script type='text/javascript' src="js/lightbox-2.6.min.js"></script>
+
+
 	  
 </head>
 
 <body>
+<div id="fb-root"></div>
+		<script>
+		imageInfo = [];
 
+		queue = [];
+
+		$.urlParam = function(name){
+		    var results = new RegExp('[\\?&]' + name + '=([^&#]*)').exec(window.location.href);
+		    return results[1] || 0;
+		};
+
+		function processQueue()
+		{
+			while(queue !== null && queue.length > 0)
+			{
+				image = queue.shift();
+
+				var time = Object.keys(image.elem)[0];
+				var data = image.elem[time].split('||');
+				var image = data[0];
+				var width = data[1];
+				var height = data[2];
+				var scale = 100 / width;
+
+				date = new Date(time).getTime();
+				position = Math.floor((date - start_time) / 1000) - 50;
+				current_image = {};
+				current_image['bottom'] = 10;
+				current_image['height'] = height * scale;
+				current_image['position'] = position;
+
+				$(imageInfo).each(function(i, element)
+				{
+					if (Math.abs(current_image['position'] - element['position']) < 100)
+					{
+						console.log('go')
+						current_image['position'] = element['position'];
+					}
+					if (
+						Math.abs(current_image['position'] - element['position']) < 70 
+						&& element['height'] + element['bottom'] > current_image['bottom']
+						)
+					{
+						current_image['bottom'] = element['bottom'] + element['height'] - 50;
+					}
+				});
+				if (current_image['bottom'] > 420)
+				{
+					current_image['position'] += 200;
+					current_image['bottom'] = 10;
+				}
+				else
+				{
+					imageInfo.push(current_image);
+					$('.images').append(
+						"<a href='" + image + "' data-lightbox='timeline'><img src='" + image + "' class='timeline-image' style='bottom: " + current_image['bottom'] + "px; left: " + current_image['position'] + "px;' /></a>"
+					);
+				}
+			}
+		}
+
+		window.fbAsyncInit = function() {
+		  FB.init({
+		    appId      : '635711579796398', // Facebook App ID
+		    channelUrl : window.location.href + 'channel.html', // Channel File
+		    status     : true, // check login status
+		    cookie     : true, // enable cookies to allow Parse to access the session
+		    xfbml      : true  // parse XFBML
+		  });
+
+		  FB.getLoginStatus(function(response)
+		  {
+		  	if (response.status == 'connected')
+		  	{
+		  		// get time since event started
+		  		FB.api($.urlParam('event'), function(response) {
+		  			start_time = new Date(response.start_time).getTime();
+		  			var current_time = new Date().getTime();
+		  			var seconds_since_start = Math.floor((current_time - start_time) / 1000);
+
+		  			$('#line').width(seconds_since_start);
+		  		    circles = Math.floor(seconds_since_start / 600);
+
+		  		    while (circles > 0)
+		  		    {
+		  		    	time = new Date(new Date(start_time).getTime() + circles * 600000);
+		  		    	$('.timeline').append("<div class='dot' style='left: " + (circles * 600) + "px'>&nbsp;</dot><span class='under'>" + time.toString('hh:mmt').toLowerCase() + "</span>");
+		  		    	circles--;
+		  		    }
+
+		  		    timer = seconds_since_start;
+		  			$('.timeline').width($('#line').width() + 200);
+
+		  			// load existing images for event
+		  			var images = new Firebase('https://flocios.firebaseio.com/events/' + $.urlParam('event'));
+
+		  			
+		  			images.on('child_added', function(snapshot) {
+		  				$(snapshot.val()).each(function(time, elem)
+		  				{
+		  					element = {};
+		  					element['time'] = time;
+		  					element['elem'] = elem;
+		  					queue.push(element);
+		  				});
+		  			});
+
+		  			while(queue.length > 0)
+		  			{
+		  				processQueue(queue);
+		  			}
+
+		  			$('html, body').animate({scrollLeft: $(document).width()}, 800);
+
+		  			setInterval(function() {
+		  				processQueue(queue);
+		  				$('#line').width($('#line').width() + 1);
+		  				$('.timeline').width($('.timeline').width() + 1);
+		  		        $(window).scrollLeft($(window).scrollLeft() + 1);
+		  		        timer++;
+		  		        if (timer % 600 == 0)
+		  		        {
+		  		        	time = new Date(start_time + timer * 1000);
+		  		        	$('.timeline').append("<div class='dot' style='left: " + timer + "px'>&nbsp;</dot><span class='under'>" + time.toString('hh:mmt').toLowerCase() + "</span>");
+		  		        }
+		  			}, 1000)
+		  		});
+		  	}
+		  	else
+		  	{
+		  		FB.login(function(response) {
+			  		if (response.authResponse) {
+
+			  		} else {
+			  			console.log('User cancelled login or did not fully authorize.');
+			  		}}, {scope: 'user_events, read_stream'}
+			  	);
+		  	}
+		  });
+		 
+		  // Additional initialization code here
+		};
+
+		  // Load the SDK asynchronously
+		  (function(d, s, id){
+		     var js, fjs = d.getElementsByTagName(s)[0];
+		     if (d.getElementById(id)) {return;}
+		     js = d.createElement(s); js.id = id;
+		     js.src = "//connect.facebook.net/en_US/all.js";
+		     fjs.parentNode.insertBefore(js, fjs);
+		   }(document, 'script', 'facebook-jssdk'));
+		</script>
+
+	<img src="img/floc.png" alt="floc" id="logo" />
 	<div class="timeline">
+		<div class="images">
+			<!-- <img src="img/1.jpg" class="timeline-image"/> -->
+		</div>
 		<div id="line" class="line" style="width: 0px">&nbsp;</div>
 	</div>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
